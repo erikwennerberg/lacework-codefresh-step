@@ -25,7 +25,7 @@ metadata:
           type: lacework/lacework-vuln-scan
           arguments:
             report_name: api-server-vuln-scan
-            lw_acc_suffix: qan1.corp.lacework.net
+            lw_acc_suffix: lacework.net
             lw_access_token: eefd65ffff
             lw_acc_name: some-account
             image_repo: lacework
@@ -116,7 +116,7 @@ spec:
     vulnerability_scan:
       title: "Vulnerability Scan"
       description: "Run a Lacework Vulnerability Scan on an Image"
-      image: "lacework/test-builder:1.2.1"
+      image: "codefresh/cfbase:latest"
       shell: bash
       environment:
         - LW_ACCOUNT_SUFFIX=${{lw_acc_suffix}}
@@ -127,9 +127,6 @@ spec:
         - IMAGE_TAG=${{image_tag}}
         - REPORT_NAME=${{report_name}}
       commands:
-        #- export LW_ACCOUNT_SUFFIX=lacework.net
-        #- export LW_ACCESS_TOKEN=${{INLINE_SCANNER_ACCESS_TOKEN}}
-        #- export LW_ACCOUNT_NAME=lacework
         - mkdir -p /codefresh/volume/vuln-report/
         - cd /codefresh/volume/vuln-report/
         - rm -rf ${IMAGE_NAME}*.html
@@ -148,5 +145,5 @@ spec:
         - REPORT_DIR=/codefresh/volume/vuln-report/
         - REPORT_INDEX_FILE=lacework-vuln-${{image_name}}.html
         - BUCKET_NAME=${{bucket_name}} #codefresh-lw-reporting/codefresh
-        - CF_STORAGE_INTEGRATION=${{storage_intg}} #lacework-devtest-aws
+        - CF_STORAGE_INTEGRATION=${{storage_intg}} 
         - CF_BRANCH_TAG_NORMALIZED=${{branch}} #${{CF_BRANCH}}
